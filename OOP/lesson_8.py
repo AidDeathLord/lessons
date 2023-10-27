@@ -1,13 +1,16 @@
 class HourClock:
     def __init__(self):
+        """При объявлении значение часов 0"""
         self.time = 0
 
     @property
     def hours(self):
+        """Возвращает значение на циферблате"""
         return self.time % 12
 
     @hours.setter
     def hours(self, value):
+        """Устанавливает новое значение циферблата"""
         self.time = value
 
 
