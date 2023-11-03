@@ -31,4 +31,3 @@ print(truncater.truncate('one two'))  # 'one...'
 print(truncater.truncate('one two', separator='!'))  # 'one!'
 print(truncater.truncate('one two'))  # 'one...'
 print(truncater.truncate('one two', length=7))  # 'one two'
-
