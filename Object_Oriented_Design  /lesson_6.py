@@ -42,9 +42,14 @@ class Collection:
         return list(self.iterable)
 
 
-def format(data:list) -> dict:
-    data_collection = Collection(data)
-    print(data_collection.reduce_(data_collection3.).all())
+def format_(data: list):
+    data_col = Collection(data)
+    return data_col.map_(lambda row: {'country': row['country'].lower().replace(' ', ''), 'name': row['name'].lower().replace(' ', '')}) \
+        .unique() \
+        .group_by(lambda row: (row['country'], row['name'])) \
+        .map_(lambda row: {key: sorted(values) for key, values in row.items()}) \
+        .sort_by(lambda row: list(row.keys())) \
+        .all()
 
 
 raw = [{'name': 'istambul', 'country': 'turkey'},
@@ -52,5 +57,8 @@ raw = [{'name': 'istambul', 'country': 'turkey'},
        {'name': 'iStambul', 'country': 'tUrkey'},
        {'name': 'antalia', 'country': 'turkeY '},
        {'name': 'samarA', 'country': '  ruSsiA'}]
-format(raw)
+print(format_(raw))
+
+expected = [{'russia': ['moscow', 'samara']},
+            {'turkey': ['antalia', 'istambul']}]
 
