@@ -2,13 +2,12 @@ from in_memory_kv import InMemoryKV
 
 
 def swap_key_value(_dict):
-    copy = _dict
-    for elem in copy.to_dict():
-        print(elem)
-        value = _dict.get_(elem)
-        _dict.set_(value, elem)
-    for elem in copy.to_dict():
+    copy = {}
+    for elem in _dict.to_dict():
+        copy[elem] = _dict.get_(elem)
         _dict.unset_(elem)
+    for keys, values in copy.items():
+        _dict.set_(values, keys)
     return _dict
 
 
