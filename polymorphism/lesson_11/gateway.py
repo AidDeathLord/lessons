@@ -1,9 +1,28 @@
 KOSTROVOK_FEE = 0.12
 BOOKKING_CONVERT_RATE = 75
 
+
 # BEGIN (write your solution here)
-def find_all_matching(data):
-    for 
+MAPPING = {
+    'kostrovok': lambda x: x * KOSTROVOK_FEE + x,
+    'book-king': lambda x: x * BOOKKING_CONVERT_RATE,
+    'airdnb': lambda x: x
+}
+
+
+def find_all_matching(data, price={}):
+    min_max_price = {'min': float('-inf'), 'max': float('inf')}
+    for keys, values in price.items():
+        min_max_price[keys] = values
+    result = []
+    for elem in data:
+        for hotel in elem.get('hotels'):
+            cost = MAPPING[elem.get('service')](hotel['cost'])
+            if min_max_price['min'] <= cost <= min_max_price['max']:
+                result.append({'hotel': {'cost': cost, 'name': hotel.get('name')}, 'service': elem.get('service')})
+
+    return result
+
 # END
 
 
