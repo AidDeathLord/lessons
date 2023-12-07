@@ -7,25 +7,29 @@ import pytest
 class TcpConnection:
 # BEGIN (write your solution here)
     def __init__(self, ip, port):
+        self.states = {
+            'disconnected': DisconnectedState,
+            'connected': ConnectedState,
+        }
         self.ip = ip
         self.port = port
-        self.states = {
-            'connected': ConnectedState,
-            'disconnected': DisconnectedState,
-        }
-        self.state = self.states['disconnected']()
-
-    def connect(self):
-        return self.state.connect()
-
-    def write(self, text):
-        return self.state.write()
-
-    def disconnect(self):
-        return self.state.disconnect()
+        self.buffer = []
+        self.set_state('disconnected')
 
     def get_current_state(self):
-        return self.state.get_state()
+        return self.state.get_name()
+
+    def connect(self):
+        self.state.connect()
+
+    def disconnect(self):
+        self.state.disconnect()
+
+    def write(self, data):
+        self.state.write(data)
+
+    def set_state(self, name):
+        self.state = self.states[name](self)
 # END
 
 
